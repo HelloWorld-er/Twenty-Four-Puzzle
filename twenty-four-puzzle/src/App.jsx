@@ -1,13 +1,15 @@
 import "./style.css";
-import {children} from "solid-js";
 import Header from "./components/Header";
+import {Router} from "@solidjs/router";
+import {routes} from "./routes";
 
-export default function App(props) {
-  const resolved = children(() => props.children)
+export default function App() {
   return (
-     <div class="flex flex-col w-[100vw] h-[100vh]">
+    <main class="flex flex-col w-[100vw] h-[100vh]">
       <Header />
-      {resolved()}
-    </div>
+      <Router>
+        {routes}
+      </Router>
+    </main>
   )
 }

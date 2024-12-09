@@ -4,7 +4,7 @@ export default function GameRule() {
   const navigate = useNavigate();
   return (
     <div class="flex-grow flex flex-col justify-center items-center">
-      <div class="w-[70vw] my-4 mx-auto p-4 text-base rounded-lg shadow-[0_0_5px_#9ca3af]">
+      <div class="w-[60vw] my-4 mx-auto p-4 text-base rounded-lg shadow-[0_0_5px_#9ca3af]">
         <h2 class="text-lg font-bold">Game Rule</h2>
         <p class="my-2">The 24 Game is an arithmetical card game in which the objective is to find a way to manipulate
           four integers so that the end result is 24.</p>
