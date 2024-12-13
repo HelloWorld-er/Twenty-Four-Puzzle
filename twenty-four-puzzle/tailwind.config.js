@@ -16,6 +16,10 @@ export default {
           "0%": {transform: "translateY(0)"},
           "100%": {transform: "translateY(-100%)"},
         },
+        "horizontal-marquee": {
+          "0%": {transform: "translateX(0)"},
+          "100%": {transform: "translateX(-100%)"},
+        }
       }
     },
   },

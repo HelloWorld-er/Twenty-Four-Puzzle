@@ -6,18 +6,18 @@ import FourOhFour from "./page/404.jsx";
 export const routes = [
   {
     path: "/",
-    component: () => <Home />
+    component: () => <Home/>
   },
   {
     path: "/game-rule",
-    component: () => <GameRule />
+    component: () => <GameRule/>
   },
   {
     path: "/game-start",
-    component: () => <GameStart />
+    component: () => <GameStart/>
   },
   {
     path: "/*all",
-    component : () => <FourOhFour />
+    component: () => <FourOhFour/>
   }
 ]

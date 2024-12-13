@@ -1,32 +1,73 @@
-import {For} from 'solid-js';
+import {createEffect, For, Show} from 'solid-js';
+import {useAppContext} from "../AppContext.jsx";
 
-function PlayCard(props) {
+export function PlayCard(props) {
   return (
     <div
-      class="w-40 h-56 p-4 flex justify-center items-center text-center text-2xl font-bold rounded-xl shadow-[0_0_5px_#9ca3af] bg-play-card-bg bg-cover bg-no-repeat"
+      classList={{
+        [props.width]: !!props.width,
+        "min-w-24": true,
+        "box-border": true,
+        "aspect-[5/7]": true,
+        "flex": true,
+        "flex-shrink": true,
+        "text-center": true,
+        "text-xl": true,
+        "font-bold": true,
+        "rounded-xl": true,
+        "shadow-[0_0_5px_#9ca3af]": true,
+        "bg-play-card-bg": true,
+        "bg-cover": true,
+        "bg-no-repeat": true
+      }}
       aria-hidden={props.ariaHidden ? "true" : "false"}
     >
-      Twenty-Four Puzzle
-      <br/>
-      Play Card
+      <span class="m-auto overflow-hidden text-ellipsis">Twenty-Four Puzzle Play Card</span>
     </div>
   )
 }
 
-export default function PlayCards() {
+export default function PlayCards(props) {
+  const context = useAppContext();
+
   const numberOfPlayCards = 52;
   const playCardsArray = [...Array(numberOfPlayCards).keys()];
 
+  const isPickingCards = () => context.appState.isPickingCards;
+
+  createEffect(async () => {
+    if (isPickingCards()) {
+      await new Promise(resolve => setTimeout(resolve, 50));
+      context.setAppState("isPickingCards", false);
+    }
+  })
+
   return (
-    <div class="overflow-hidden m-5">
-      <div class="w-fit m-1 flex flex-col gap-4 animate-vertical-marquee">
-        <For each={playCardsArray}>
-          {() => <PlayCard/>}
+    <>
+      <div
+        classList={{
+          "animate-vertical-marquee": props.style === "marquee" && props.animation && props.direction === "col",
+          "animate-horizontal-marquee": props.style === "marquee" && props.animation && props.direction === "row",
+          "m-1": true,
+          "flex": true,
+          "flex-col": props.direction === "col",
+          "flex-row": props.direction === "row",
+          "items-center": true,
+          "justify-center": true,
+          "w-fit": true,
+          "h-fit": true,
+          "gap-4": true
+        }}
+      >
+        <For each={playCardsArray.slice(0, props.cardsNumber)}>
+          {() => <PlayCard width={props.cardWidth}/>}
         </For>
-        <For each={playCardsArray}>
-          {() => <PlayCard ariaHidden={true}/>}
-        </For>
+        <Show when={props.animation}>
+          <For each={playCardsArray.slice(0, props.cardsNumber)}>
+            {() => <PlayCard width={props.cardWidth} ariaHidden={true}/>}
+          </For>
+        </Show>
       </div>
-    </div>
+    </>
   )
 }

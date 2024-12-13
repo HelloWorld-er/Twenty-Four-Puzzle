@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    twenty_four_puzzle_lib::run()
+  twenty_four_puzzle_lib::run()
 }
