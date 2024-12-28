@@ -15,7 +15,7 @@ export default function GameStart() {
   return (
     <>
       <div class="flex-grow flex flex-row p-5 overflow-hidden gap-2">
-        <PlayCards cardsNumber={52} direction="col" style="marquee" animation={true} cardWidth="w-[15vw]"/>
+        <PlayCards cardsNumber={52} direction="col" styleMode="spinningWheel" animation={true} cardWidth="w-[15vw]"/>
         <div class="flex-grow flex items-center justify-center gap-2 overflow-hidden min-w-fit">
           <Show when={isGameStart()}
                 fallback={
@@ -27,7 +27,7 @@ export default function GameStart() {
                   </button>
                 }
           >
-            <PlayCards cardsNumber={4} direction="row" cardWidth="w-[15vw]"/>
+            <PlayCards cardsNumber={4} direction="row" styleMode="list" cardWidth="w-[15vw]"/>
           </Show>
         </div>
       </div>

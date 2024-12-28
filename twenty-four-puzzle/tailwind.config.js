@@ -2,6 +2,7 @@
 export default {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./index.html",
   ],
   theme: {
     extend: {
@@ -10,15 +11,21 @@ export default {
       },
       animation: {
         "vertical-marquee": "vertical-marquee 200s linear infinite",
+        "horizontal-marquee": "horizontal-marquee 200s linear infinite",
+        "spinning-wheel": "spinning-wheel 50s linear infinite"
       },
       keyframes: {
         "vertical-marquee": {
-          "0%": {transform: "translateY(0)"},
-          "100%": {transform: "translateY(-100%)"},
+          from: {translateY: "0"},
+          to: {translateY: "-100%"},
         },
         "horizontal-marquee": {
-          "0%": {transform: "translateX(0)"},
-          "100%": {transform: "translateX(-100%)"},
+          from: {translateX: "0"},
+          to: {translateX: "-100%"},
+        },
+        "spinning-wheel": {
+          from: {rotate: "0deg"},
+          to: {rotate: "360deg"},
         }
       }
     },
