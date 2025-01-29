@@ -1,4 +1,4 @@
-import {createEffect, createSignal, For, Match, onCleanup, onMount, Show, Switch} from 'solid-js';
+import {createSignal, For, Match, onCleanup, onMount, Show, Switch} from 'solid-js';
 import {useAppContext} from "../AppContext.jsx";
 
 function convertToPixel(value) {
@@ -27,35 +27,65 @@ function convertToPixel(value) {
 }
 
 export function PlayCard(props) {
+  const context = useAppContext();
   return (
-    <div
-      classList={{
-        [props.width]: !!props.width,
-        "min-w-24": true,
-        "box-border": true,
-        "aspect-[5/7]": true,
-        "flex": true,
-        "flex-shrink": true,
-        "text-center": true,
-        "text-xl": true,
-        "font-bold": true,
-        "rounded-xl": true,
-        "shadow-[0_0_5px_#9ca3af]": true,
-        "bg-play-card-bg": true,
-        "bg-cover": true,
-        "bg-no-repeat": true,
-        "bg-white": true
-      }}
-      style={props.style}
-      aria-hidden={props.ariaHidden ? "true" : "false"}
+    <Show when={props.dynamic && context.appState.finishCreatingPickingCardsResources && context.appState.cardsPicked[props.index].state === "ready"}
+          fallback={
+            <div
+              classList={{
+                [props.width]: !!props.width,
+                "min-w-24": true,
+                "box-border": true,
+                "aspect-[5/7]": true,
+                "flex": true,
+                "flex-shrink": true,
+                "text-center": true,
+                "text-xl": true,
+                "font-bold": true,
+                "rounded-xl": true,
+                "shadow-[0_0_5px_#9ca3af]": true,
+                "bg-[url(./img/play-card-bg.svg)]": true,
+                "bg-cover": true,
+                "bg-no-repeat": true,
+                "bg-white": true
+              }}
+              style={props.style}
+              aria-hidden={props.ariaHidden ? "true" : "false"}
+            >
+              <span class="m-auto overflow-hidden text-ellipsis">Twenty-Four Puzzle Play Card</span>
+            </div>
+          }
     >
-      <span class="m-auto overflow-hidden text-ellipsis">Twenty-Four Puzzle Play Card</span>
-    </div>
+      <div
+        on:animationend={() => context.setAppState("finishPickingCardsAnimations", [props.index], true)}
+        classList={{
+          [props.width]: !!props.width,
+          "min-w-24": true,
+          "box-border": true,
+          "aspect-[5/7]": true,
+          "flex": true,
+          "flex-shrink": true,
+          "text-center": true,
+          "text-5xl": true,
+          "font-bold": true,
+          "rounded-xl": true,
+          "shadow-[0_0_5px_#9ca3af]": true,
+          "bg-[url(./img/play-card-bg.svg)]": true,
+          "bg-cover": true,
+          "bg-no-repeat": true,
+          "bg-white": true,
+          "animate-once-vertical-rotate": true
+        }}
+        style={props.style}
+        aria-hidden={props.ariaHidden ? "true" : "false"}
+      >
+        <span class="m-auto overflow-hidden text-ellipsis">{context.appState.cardsPicked[props.index]()}</span>
+      </div>
+    </Show>
   )
 }
 
 export default function PlayCards(props) {
-  const context = useAppContext();
   const getCardWidth = () => convertToPixel(props.cardWidth.startsWith("w-[") && props.cardWidth.endsWith("]") ? props.cardWidth.slice(3, -1).trim() : "6rem");
   const getCardHeight = () => getCardWidth() + "/ 5 * 7";
 
@@ -92,44 +122,48 @@ export default function PlayCards(props) {
   const numberOfPlayCards = 52;
   const playCardsArray = [...Array(numberOfPlayCards).keys()];
 
-  const isPickingCards = () => context.appState.isPickingCards;
-
-  createEffect(async () => {
-    if (isPickingCards()) {
-      await new Promise(resolve => setTimeout(resolve, 50000));
-      context.setAppState("isPickingCards", false);
-    }
-  })
-
   return (
     <>
       <div
+        ref={props.ref}
         classList={{
           "animate-vertical-marquee": props.styleMode === "marquee" && props.animation && props.direction === "col",
           "animate-horizontal-marquee": props.styleMode === "marquee" && props.animation && props.direction === "row",
           "m-1": true,
-          "flex": true,
-          "flex-col": props.styleMode === "spinningWheel" || props.direction === "col",
-          "flex-row": props.styleMode === "spinningWheel" || props.direction === "row",
+          "flex": props.styleMode !== "grid",
+          "grid": props.styleMode === "grid",
+          "flex-col": props.styleMode !== "grid" && (props.styleMode === "spinningWheel" || props.direction === "col"),
+          "flex-row": props.styleMode !== "grid" && (props.styleMode === "spinningWheel" || props.direction === "row"),
           "items-center": true,
           "justify-center": true,
-          "w-fit": props.styleMode !== "spinningWheel",
-          "h-fit": props.styleMode !== "spinningWheel",
           "w-[50vw]": props.styleMode === "spinningWheel", // only for GameStart Page
           "h-full": props.styleMode === "spinningWheel", // only for GameStart Page
+          [props.width]: !!props.width,
+          [props.height]: !!props.height,
+          "w-fit": props.styleMode !== "spinningWheel",
+          "h-fit": props.styleMode !== "spinningWheel",
           "gap-4": props.styleMode !== "spinningWheel",
+        }}
+        style={{
+          "grid-template-columns": `repeat(${props.cols}, minmax(0, 1fr))`,
+          "grid-template-rows": `repeat(${props.rows}, minmax(0, 1fr))`,
         }}
       >
         <Switch fallback={<></>}>
           <Match when={props.styleMode === "list" || props.styleMode === "marquee"}>
             <For each={playCardsArray.slice(0, props.cardsNumber)}>
-              {() => <PlayCard width={props.cardWidth} styleMode={props.styleMode}/>}
+              {(item) => <PlayCard width={props.cardWidth} styleMode={props.styleMode} dynamic={props.dynamic} index={item}/>}
             </For>
             <Show when={props.animation}>
               <For each={playCardsArray.slice(0, props.cardsNumber)}>
-                {() => <PlayCard width={props.cardWidth} styleMode={props.styleMode} ariaHidden={true}/>}
+                {(item) => <PlayCard width={props.cardWidth} styleMode={props.styleMode} ariaHidden={true} dynamic={props.dynamic} index={item}/>}
               </For>
             </Show>
+          </Match>
+          <Match when={props.styleMode === "grid"}>
+            <For each={playCardsArray.slice(0, props.cardsNumber)}>
+              {(item) => <PlayCard width={props.cardWidth} styleMode={props.styleMode} dynamic={props.dynamic} index={item}/>}
+            </For>
           </Match>
           <Match when={props.styleMode === "spinningWheel"}>
             <div ref={el => spinningWheelContainer=el}
@@ -145,6 +179,8 @@ export default function PlayCards(props) {
                 {(item, index) =>
                   <PlayCard width={props.cardWidth}
                             styleMode={props.styleMode}
+                            dynamic={props.dynamic}
+                            index={item}
                             style={{
                               transform: `translate(calc(${spinningWheelContainerWidth()}px / 2 - ${getCardWidth()}px / 2), calc(${spinningWheelContainerHeight()}px / 2 - ${getCardHeight()}px / 2 - ${getCardHeight()}px * ${index()})) matrix(cos(calc(360deg / ${numberOfPlayCards} * ${index()})), sin(calc(360deg / ${numberOfPlayCards} * ${index()})), calc(-1 * sin(calc(360deg / ${numberOfPlayCards} * ${index()}))), cos(calc(360deg / ${numberOfPlayCards} * ${index()})), calc(${radius()} * sin(calc(360deg / ${numberOfPlayCards} * ${index()}))), calc(-1 * ${radius()} * cos(calc(360deg / ${numberOfPlayCards} * ${index()}))))`,
                               }}

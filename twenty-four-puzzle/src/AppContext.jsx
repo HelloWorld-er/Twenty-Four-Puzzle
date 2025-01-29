@@ -3,8 +3,13 @@ import {createStore, reconcile} from "solid-js/store";
 
 const AppContext = createContext();
 const appContextDefaultData = {
+  numberOfPickedCards: 4,
   isGameStart: false,
-  isPickingCards: false
+  isPickingCards: false,
+  finishCreatingPickingCardsResources: false,
+  finishPickingCardsAnimations: Array(false, false, false, false),
+  finishCardsPicking: false,
+  cardsPicked: Array()
 };
 
 export function AppContextProvider(props) {
@@ -16,6 +21,7 @@ export function AppContextProvider(props) {
       setAppState(reconcile(appContextDefaultData));
     }
   };
+
   return (
     <AppContext.Provider value={appContextData}>
       {props.children}
