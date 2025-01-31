@@ -28,19 +28,23 @@ function convertToPixel(value) {
 
 export function PlayCard(props) {
   const context = useAppContext();
+  onMount(() => {
+    console.log("PlayCard mounted");
+  })
   return (
     <Show when={props.dynamic && context.appState.finishCreatingPickingCardsResources && context.appState.cardsPicked[props.index].state === "ready"}
           fallback={
             <div
               classList={{
                 [props.width]: !!props.width,
-                "min-w-24": true,
+                "min-w-20": true,
                 "box-border": true,
                 "aspect-[5/7]": true,
                 "flex": true,
+                "items-center": true,
+                "justify-center": true,
                 "flex-shrink": true,
                 "text-center": true,
-                "text-xl": true,
                 "font-bold": true,
                 "rounded-xl": true,
                 "shadow-[0_0_5px_#9ca3af]": true,
@@ -52,18 +56,20 @@ export function PlayCard(props) {
               style={props.style}
               aria-hidden={props.ariaHidden ? "true" : "false"}
             >
-              <span class="m-auto overflow-hidden text-ellipsis">Twenty-Four Puzzle Play Card</span>
+              <span class="overflow-hidden text-ellipsis">Twenty-Four Puzzle Play Card</span>
             </div>
           }
     >
       <div
-        on:animationend={() => context.setAppState("finishPickingCardsAnimations", [props.index], true)}
+        on:animationend={() => context.setAppState("finishPickingCardsAnimations", (previousStates) => [...previousStates, true])}
         classList={{
           [props.width]: !!props.width,
-          "min-w-24": true,
+          "min-w-20": true,
           "box-border": true,
           "aspect-[5/7]": true,
           "flex": true,
+          "items-center": true,
+          "justify-center": true,
           "flex-shrink": true,
           "text-center": true,
           "text-5xl": true,
@@ -79,7 +85,7 @@ export function PlayCard(props) {
         style={props.style}
         aria-hidden={props.ariaHidden ? "true" : "false"}
       >
-        <span class="m-auto overflow-hidden text-ellipsis">{context.appState.cardsPicked[props.index]()}</span>
+        <span class="overflow-hidden text-ellipsis">{context.appState.cardsPicked[props.index]()}</span>
       </div>
     </Show>
   )
@@ -136,12 +142,11 @@ export default function PlayCards(props) {
           "flex-row": props.styleMode !== "grid" && (props.styleMode === "spinningWheel" || props.direction === "row"),
           "items-center": true,
           "justify-center": true,
-          "w-[50vw]": props.styleMode === "spinningWheel", // only for GameStart Page
-          "h-full": props.styleMode === "spinningWheel", // only for GameStart Page
+          "w-full": !props.width,
+          "h-full": !props.height,
           [props.width]: !!props.width,
           [props.height]: !!props.height,
-          "w-fit": props.styleMode !== "spinningWheel",
-          "h-fit": props.styleMode !== "spinningWheel",
+          "place-items-center": props.styleMode === "grid",
           "gap-4": props.styleMode !== "spinningWheel",
         }}
         style={{

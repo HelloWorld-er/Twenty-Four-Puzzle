@@ -1,5 +1,5 @@
 import {createContext, useContext} from "solid-js";
-import {createStore, reconcile} from "solid-js/store";
+import {createStore} from "solid-js/store";
 
 const AppContext = createContext();
 const appContextDefaultData = {
@@ -7,9 +7,10 @@ const appContextDefaultData = {
   isGameStart: false,
   isPickingCards: false,
   finishCreatingPickingCardsResources: false,
-  finishPickingCardsAnimations: Array(false, false, false, false),
+  finishPickingCardsAnimations: Array(),
   finishCardsPicking: false,
-  cardsPicked: Array()
+  cardsPicked: Array(),
+  getAnswer: false
 };
 
 export function AppContextProvider(props) {
@@ -18,7 +19,7 @@ export function AppContextProvider(props) {
     appState,
     setAppState,
     reset: () => {
-      setAppState(reconcile(appContextDefaultData));
+      setAppState(appContextDefaultData);
     }
   };
 

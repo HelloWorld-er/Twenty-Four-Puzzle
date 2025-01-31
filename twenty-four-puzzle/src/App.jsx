@@ -9,9 +9,11 @@ export default function App() {
     <main class="flex flex-col w-[100vw] h-[100vh] overflow-hidden relative">
       <AppContextProvider>
         <Header/>
-        <Router>
-          {routes}
-        </Router>
+        <div class="flex-grow w-full h-full relative">
+          <Router>
+            {routes}
+          </Router>
+        </div>
       </AppContextProvider>
     </main>
   )
