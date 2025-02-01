@@ -48,7 +48,7 @@ export function PlayCard(props) {
                 "font-bold": true,
                 "rounded-xl": true,
                 "shadow-[0_0_5px_#9ca3af]": true,
-                "bg-[url(./img/play-card-bg.svg)]": true,
+                "bg-[url(../img/play-card-bg.svg)]": true,
                 "bg-cover": true,
                 "bg-no-repeat": true,
                 "bg-white": true
@@ -76,7 +76,7 @@ export function PlayCard(props) {
           "font-bold": true,
           "rounded-xl": true,
           "shadow-[0_0_5px_#9ca3af]": true,
-          "bg-[url(./img/play-card-bg.svg)]": true,
+          "bg-[url(../img/play-card-bg.svg)]": true,
           "bg-cover": true,
           "bg-no-repeat": true,
           "bg-white": true,

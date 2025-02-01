@@ -1,4 +1,3 @@
-extern crate meval;
 use meval::eval_str;
 use std::collections::HashSet;
 
@@ -16,31 +15,6 @@ fn eval_expression(expression: String) -> String {
   }
 }
 
-
-
-fn extract_numbers(expression: &str) -> HashSet<i32> {
-  let mut numbers = HashSet::new();
-  let mut current_number = String::new();
-
-  for ch in expression.chars() {
-    if ch.is_digit(10) {
-      current_number.push(ch);
-    } else if !current_number.is_empty() {
-      if let Ok(number) = current_number.parse::<i32>() {
-        numbers.insert(number);
-      }
-      current_number.clear();
-    }
-  }
-
-  // Insert the last number if there is one
-  if !current_number.is_empty() {
-    if let Ok(number) = current_number.parse::<i32>() {
-      numbers.insert(number);
-    }
-  }
-  numbers
-}
 
 fn check_expression(expression: &str, required_numbers: &HashSet<i32>) -> bool {
     let allowed_chars: HashSet<char> = ['+', '-', '*', '/', '(', ')'].iter().cloned().collect();
@@ -82,7 +56,7 @@ fn check_expression_format(expression: &str, a: i32, b: i32, c: i32, d: i32) -> 
 
 
 fn evaluate_expression(expression: &str) -> Result<f64, meval::Error> {
-  meval::eval_str(expression)
+  eval_str(expression)
 }
 
 fn generate_expressions(numbers: &[i32]) -> HashSet<String> {
