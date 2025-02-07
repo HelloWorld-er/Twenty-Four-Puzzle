@@ -90,7 +90,7 @@ export default function Game() {
 
   async function checkAnswer() {
     setIsCheckingAnswer(true);
-    if (getInputValue() !== "") {
+    if (hasSolution()) {
       let answer = await invoke("eval_expression", {expression: getInputValue()});
       let isMatchFormat = await invoke("check_expression_format", {expression: getInputValue(), a: convertCardsToNumber(context.appState.cardsPicked[0]()), b: convertCardsToNumber(context.appState.cardsPicked[1]()), c: convertCardsToNumber(context.appState.cardsPicked[2]()), d: convertCardsToNumber(context.appState.cardsPicked[3]())});
       console.log(isMatchFormat)
