@@ -9,5 +9,37 @@ The game is played with a deck of 52 cards, each card has a number from 1 to 13,
 
 The game is played by rearranging the numbers and using the four basic arithmetic operations (+, -, *, /) to form an expression that equals 24.
 
+## Download
+> "Since the core developer which is me does not have the money to purchase a 99 dollars fee annually to join the Apple Developer Program, people who want to have a try of our product (the app, in this case) can only download the source code by themselves and build the app locally."
+
+### Prerequisites
+
+Before you begin, make sure you have the following installed on your system:
+
+1. **Node.js**: The JavaScript runtime environment. You can download it from [nodejs.org](https://nodejs.org/).
+2. **npm**: The Node package manager, which comes with Node.js. Ensure you have the latest
+
+### Instructions
+
+3. Download and install the latest version of Node.js from the [official Node.js website](https://nodejs.org/).
+4. Verify the installation by running the following commands in your terminal:
+   ```sh
+   node -v
+   npm -v
+   ```
+5. Download the zip or tar.gz file in the [release](https://github.com/HelloWorld-er/Twenty-Four-Puzzle/releases) section
+6. open the folder in terminal
+7. run the following code in terminal
+  ```sh
+  npm install
+  ```
+8. bundle the app locally
+   ```sh
+   npm run tauri build -- --bundles dmg
+   ```
+   **currently only support MacOS**
+  
+
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
