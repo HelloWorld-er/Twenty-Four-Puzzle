@@ -39,9 +39,9 @@ If you have **Rust/rustup**, you can skip step 3.
 4. Download the zip or tar.gz file in the [release](https://github.com/HelloWorld-er/Twenty-Four-Puzzle/releases) section
 5. open the folder in terminal
 6. run the following code in terminal
-  ```sh
-  npm install
-  ```
+   ```sh
+   npm install
+   ```
 7. bundle the app locally
    ```sh
    npm run tauri build -- --bundles dmg
