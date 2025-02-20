@@ -18,8 +18,10 @@ Before you begin, make sure you have the following installed on your system:
 
 - **Node.js**: The JavaScript runtime environment. You can download it from [nodejs.org](https://nodejs.org/).
 - **npm**: The Node package manager, which comes with Node.js. Ensure you have the latest
-- **Rust**: Rust, a programming languge, is installed and managed by the rustup tool. 
+- **Rust**: Rust, a programming languge, is installed and managed by the rustup tool.
+
 If you have **Node.js** and **npm**, you can skip step 1 and step 2.
+
 If you have **Rust/rustup**, you can skip step 3.
 
 ### Instructions
