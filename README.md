@@ -16,24 +16,25 @@ The game is played by rearranging the numbers and using the four basic arithmeti
 
 Before you begin, make sure you have the following installed on your system:
 
-1. **Node.js**: The JavaScript runtime environment. You can download it from [nodejs.org](https://nodejs.org/).
-2. **npm**: The Node package manager, which comes with Node.js. Ensure you have the latest
+- **Node.js**: The JavaScript runtime environment. You can download it from [nodejs.org](https://nodejs.org/).
+- **npm**: The Node package manager, which comes with Node.js. Ensure you have the latest
+If you have **Node.js** and **npm**, you can skip step 1 and step 2.
 
 ### Instructions
 
-3. Download and install the latest version of Node.js from the [official Node.js website](https://nodejs.org/).
-4. Verify the installation by running the following commands in your terminal:
+1. Download and install the latest version of Node.js from the [official Node.js website](https://nodejs.org/).
+2. Verify the installation by running the following commands in your terminal:
    ```sh
    node -v
    npm -v
    ```
-5. Download the zip or tar.gz file in the [release](https://github.com/HelloWorld-er/Twenty-Four-Puzzle/releases) section
-6. open the folder in terminal
-7. run the following code in terminal
+3. Download the zip or tar.gz file in the [release](https://github.com/HelloWorld-er/Twenty-Four-Puzzle/releases) section
+4. open the folder in terminal
+5. run the following code in terminal
   ```sh
   npm install
   ```
-8. bundle the app locally
+6. bundle the app locally
    ```sh
    npm run tauri build -- --bundles dmg
    ```
